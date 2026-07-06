@@ -1,0 +1,24 @@
+# --- secrets & local config (never commit) ---
+.env
+.env.*
+!.env.example
+
+# --- data: personal seed data, encrypted secrets, crypto salt/verifier ---
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# --- dependencies & build artifacts ---
+node_modules/
+web/node_modules/
+web/dist/
+
+# --- cloudflared credentials (tunnel secret) ---
+cloudflared/*.json
+cloudflared/config.yml
+!cloudflared/config.example.yml
+
+# --- Claude Code local settings & logs ---
+.claude/settings.local.json
+*.log

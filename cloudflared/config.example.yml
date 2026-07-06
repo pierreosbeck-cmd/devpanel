@@ -1,0 +1,25 @@
+# DevPanel remote access via Cloudflare Tunnel (SPEC step 8).
+#
+# This config is REPO-LOCAL on purpose: run it with an explicit --config so it
+# never clashes with any other tunnel already on the machine.
+#
+#   cloudflared tunnel login                       # once, if not already authed
+#   cloudflared tunnel create devpanel             # creates the tunnel + creds json
+#   cp cloudflared/config.example.yml cloudflared/config.yml
+#   # edit config.yml: set the real tunnel-id creds path and your hostname
+#   cloudflared tunnel route dns devpanel panel.example.com
+#   cloudflared tunnel --config ./cloudflared/config.yml run devpanel
+#
+# Then put it behind Cloudflare Access (Zero Trust dashboard or API):
+#   Application : self-hosted, panel.example.com
+#   Policy      : Allow, include -> emails -> you@example.com  (everyone else blocked)
+#
+# The API binds 127.0.0.1 only, so Cloudflare Access is the single public door.
+
+tunnel: devpanel
+credentials-file: /home/USER/.cloudflared/<TUNNEL-ID>.json
+
+ingress:
+  - hostname: panel.example.com
+    service: http://127.0.0.1:8899
+  - service: http_status:404

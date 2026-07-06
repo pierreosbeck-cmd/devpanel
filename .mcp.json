@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "devpanel": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["tsx", "server/mcp.ts"],
+      "env": {}
+    }
+  }
+}
